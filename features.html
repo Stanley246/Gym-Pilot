@@ -1,27 +1,37 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GymPilot Features – Command Centre for Fitness Studios</title>
+  <title>GymPilot – Features</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseClient = supabase.createClient(
+      "https://YOUR-PROJECT-ID.supabase.co",
+      "YOUR-ANON-PUBLIC-KEY"
+    );
+  </script>
 </head>
+
 <body>
+
 <header>
   <div class="nav">
     <div class="nav-left">
       <div class="logo-mark">GP</div>
       <div class="logo-text">GymPilot</div>
     </div>
+
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="features.html" class="active">Features</a>
       <a href="pricing.html">Pricing</a>
     </nav>
-    <div class="nav-cta">
-      <a href="login.html" class="btn btn-outline">Login</a>
-      <a href="login.html" class="btn btn-primary">Start Free</a>
-    </div>
+
+    <div class="nav-cta" id="auth-buttons"></div>
   </div>
 </header>
 
@@ -39,54 +49,16 @@
 
     <div class="grid-3">
       <div class="card">
-        <div class="badge"><span class="badge-dot"></span><span>Lead engine</span></div>
-        <h3>Centralised lead capture.</h3>
-        <p>Forms, landing pages, and funnels that push every lead into a single, clean pipeline.</p>
+        <h3>Lead Engine</h3>
+        <p>Capture every lead from ads, forms, and walk‑ins.</p>
       </div>
       <div class="card">
-        <div class="badge"><span class="badge-dot"></span><span>Pipelines</span></div>
-        <h3>Visual sales pipelines.</h3>
-        <p>Track prospects from first contact to membership with drag‑and‑drop simplicity.</p>
+        <h3>Automation</h3>
+        <p>Follow‑ups that hit instantly and consistently.</p>
       </div>
       <div class="card">
-        <div class="badge"><span class="badge-dot"></span><span>Tasks</span></div>
-        <h3>Daily action lists.</h3>
-        <p>Auto‑generated tasks so your team always knows who to call, text, or follow up with.</p>
-      </div>
-    </div>
-
-    <div class="grid-3" style="margin-top:1.5rem;">
-      <div class="card">
-        <div class="badge"><span class="badge-dot"></span><span>Automation</span></div>
-        <h3>Aggressive follow‑up sequences.</h3>
-        <p>Build SMS and email flows that hit instantly when a lead opts in, misses a class, or nears renewal.</p>
-      </div>
-      <div class="card">
-        <div class="badge"><span class="badge-dot"></span><span>Messaging</span></div>
-        <h3>Two‑way SMS & email.</h3>
-        <p>Reply to members from one inbox. No more juggling phones, apps, and random DMs.</p>
-      </div>
-      <div class="card">
-        <div class="badge"><span class="badge-dot"></span><span>Reporting</span></div>
-        <h3>Numbers that drive decisions.</h3>
-        <p>See trials, conversions, churn risk, and campaign performance at a glance.</p>
-      </div>
-    </div>
-
-    <div class="section" style="margin-top:3rem;">
-      <div class="section-header">
-        <div>
-          <div class="section-kicker">Multi‑location ready</div>
-          <h2 class="section-title">Scale without losing control.</h2>
-        </div>
-        <p class="section-subtitle">
-          GymPilot is built for owners who run more than one location and need consistent processes across every team.
-        </p>
-      </div>
-      <div class="card">
-        <p style="font-size:0.9rem; color:var(--muted); margin:0;">
-          Standardise pipelines, automations, and messaging templates across locations while keeping performance data separate and clear.
-        </p>
+        <h3>Messaging</h3>
+        <p>Two‑way SMS & email from one unified inbox.</p>
       </div>
     </div>
   </section>
@@ -95,8 +67,37 @@
 <footer>
   © <span id="year"></span> GymPilot. All rights reserved.
 </footer>
+
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  async function refreshAuthUI() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    const box = document.getElementById("auth-buttons");
+
+    if (session) {
+      box.innerHTML = `
+        <span style="color:#b3b3b3; font-size:0.8rem;">
+          Signed in as ${session.user.email}
+        </span>
+        <button class="btn btn-outline" id="signout-btn">Sign Out</button>
+      `;
+
+      document.getElementById("signout-btn").onclick = async () => {
+        await supabaseClient.auth.signOut();
+        refreshAuthUI();
+      };
+
+    } else {
+      box.innerHTML = `
+        <a href="login.html" class="btn btn-outline">Sign In</a>
+        <a href="signup.html" class="btn btn-primary">Sign Up</a>
+      `;
+    }
+  }
+
+  refreshAuthUI();
 </script>
+
 </body>
 </html>
