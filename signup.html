@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GymPilot Sign Up</title>
+  <title>GymPilot – Sign Up</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 
@@ -14,67 +14,112 @@
     );
   </script>
 </head>
-
 <body>
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-mark">GP</div>
+      <div class="logo-text">GymPilot</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+    <div class="nav-cta" id="auth-buttons"></div>
+  </div>
+</header>
 
 <main>
   <section class="section">
     <div class="form-card">
-      <h2>Create Your Account</h2>
+      <h2>Create Your GymPilot Account</h2>
+      <p>Set up your command centre and start running your studio like a machine.</p>
 
       <form id="signup-form">
         <div class="form-group">
           <label>Full Name</label>
           <input id="full_name" type="text" required />
         </div>
-
         <div class="form-group">
           <label>Email</label>
           <input id="email" type="email" required />
         </div>
-
         <div class="form-group">
           <label>Password</label>
           <input id="password" type="password" required />
         </div>
-
         <button class="btn btn-primary" style="width:100%; margin-top:1rem;">
           Create Account
         </button>
       </form>
 
       <p id="message" style="margin-top:1rem; color:var(--muted);"></p>
+
+      <div class="form-footer">
+        <span>Already have an account? <a href="login.html">Sign In</a></span>
+      </div>
     </div>
   </section>
 </main>
 
+<footer>
+  © <span id="year"></span> GymPilot. All rights reserved.
+</footer>
+
 <script>
-document.getElementById("signup-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
+  document.getElementById("year").textContent = new Date().getFullYear();
 
-  const full_name = document.getElementById("full_name").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
+  async function refreshAuthUI() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+    const box = document.getElementById("auth-buttons");
 
-  const { error } = await supabaseClient.auth.signUp({
-    email,
-    password,
-    options: {
-      emailRedirectTo: "https://app.gympilot.software",
-      data: { full_name }
+    if (session) {
+      box.innerHTML = `
+        <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
+        <span style="color:#b3b3b3; font-size:0.8rem;">
+          ${session.user.email}
+        </span>
+        <button class="btn btn-outline" id="signout-btn">Sign Out</button>
+      `;
+      document.getElementById("signout-btn").onclick = async () => {
+        await supabaseClient.auth.signOut();
+        refreshAuthUI();
+      };
+    } else {
+      box.innerHTML = `
+        <a href="login.html" class="btn btn-outline">Sign In</a>
+        <a href="signup.html" class="btn btn-primary">Sign Up</a>
+      `;
     }
-  });
-
-  if (error) {
-    document.getElementById("message").textContent =
-      "Signup failed: " + error.message;
-    return;
   }
+  refreshAuthUI();
 
-  document.getElementById("message").textContent =
-    "Check your email to verify your account before signing in.";
-});
+  document.getElementById("signup-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const full_name = document.getElementById("full_name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const { error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        emailRedirectTo: "https://YOUR-POST-VERIFY-URL",
+        data: { full_name }
+      }
+    });
+
+    if (error) {
+      document.getElementById("message").textContent =
+        "Signup failed: " + error.message;
+      return;
+    }
+
+    document.getElementById("message").textContent =
+      "Check your email to verify your account before signing in.";
+  });
 </script>
-
 </body>
 </html>
