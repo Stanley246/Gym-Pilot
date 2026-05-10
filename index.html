@@ -2,17 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GymPilot – High‑Performance CRM for Fitness Studios</title>
+  <title>GymPilot – High-Performance CRM for Fitness Studios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabaseClient = supabase.createClient(
-      "https://YOUR-PROJECT-ID.supabase.co",
-      "YOUR-ANON-PUBLIC-KEY"
-    );
-  </script>
 </head>
 <body>
 <header>
@@ -21,23 +14,36 @@
       <div class="logo-mark">GP</div>
       <div class="logo-text">GymPilot</div>
     </div>
+
     <nav class="nav-links">
       <a href="index.html" class="active">Home</a>
       <a href="features.html">Features</a>
       <a href="pricing.html">Pricing</a>
+      <!-- Dashboard (hidden unless logged in) -->
+      <a href="dashboard.html" id="dashboard-link" style="display:none;">Dashboard</a>
     </nav>
-    <div class="nav-cta" id="auth-buttons"></div>
+
+    <div class="nav-cta" id="auth-buttons">
+      <!-- These will be replaced dynamically -->
+      <a href="login.html" class="btn btn-outline" id="login-btn">Login</a>
+      <a href="login.html" class="btn btn-primary" id="signup-btn">Start Free</a>
+    </div>
+
+    <div class="nav-cta" id="logout-container" style="display:none;">
+      <button class="btn btn-outline" id="logout-btn">Logout</button>
+    </div>
   </div>
 </header>
 
 <main>
+  <!-- your existing content unchanged -->
   <section class="hero">
     <div>
       <div class="hero-kicker">Built for high-performance studios</div>
       <h1>Run your studio like a high‑performance machine.</h1>
       <p>GymPilot gives you the power, automation, and control to turn leads into loyal members and scale without chaos.</p>
       <div class="hero-cta">
-        <a href="signup.html" class="btn btn-primary">Start Free</a>
+        <a href="login.html" class="btn btn-primary">Start Free</a>
         <a href="pricing.html" class="btn btn-outline">View Pricing</a>
       </div>
       <div class="hero-meta">
@@ -117,33 +123,42 @@
 </footer>
 
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  async function refreshAuthUI() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    const box = document.getElementById("auth-buttons");
+  // --- Supabase Auth State Logic ---
+  const supabase = supabase.createClient(
+    "YOUR_SUPABASE_URL",
+    "YOUR_SUPABASE_ANON_KEY"
+  );
+
+  async function updateNav() {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    const loginBtns = document.getElementById("auth-buttons");
+    const logoutContainer = document.getElementById("logout-container");
+    const dashboardLink = document.getElementById("dashboard-link");
 
     if (session) {
-      box.innerHTML = `
-        <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
-        <span style="color:#b3b3b3; font-size:0.8rem;">
-          ${session.user.email}
-        </span>
-        <button class="btn btn-outline" id="signout-btn">Sign Out</button>
-      `;
-      document.getElementById("signout-btn").onclick = async () => {
-        await supabaseClient.auth.signOut();
-        refreshAuthUI();
-      };
+      // Logged in
+      loginBtns.style.display = "none";
+      logoutContainer.style.display = "flex";
+      dashboardLink.style.display = "inline-block";
     } else {
-      box.innerHTML = `
-        <a href="login.html" class="btn btn-outline">Sign In</a>
-        <a href="signup.html" class="btn btn-primary">Sign Up</a>
-      `;
+      // Logged out
+      loginBtns.style.display = "flex";
+      logoutContainer.style.display = "none";
+      dashboardLink.style.display = "none";
     }
   }
 
-  refreshAuthUI();
+  updateNav();
+
+  // Logout handler
+  document.getElementById("logout-btn").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    location.reload();
+  });
 </script>
+
 </body>
 </html>
