@@ -2,11 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GymPilot Login – Access Your Command Centre</title>
+  <title>GymPilot Login</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const supabaseClient = supabase.createClient(
+      "https://YOUR-PROJECT-ID.supabase.co",
+      "YOUR-ANON-PUBLIC-KEY"
+    );
+  </script>
 </head>
+
 <body>
 
 <header>
@@ -15,19 +23,13 @@
       <div class="logo-mark">GP</div>
       <div class="logo-text">GymPilot</div>
     </div>
-    <nav class="nav-links">
-      <a href="index.html">Home</a>
-      <a href="features.html">Features</a>
-      <a href="pricing.html">Pricing</a>
-    </nav>
   </div>
 </header>
 
 <main>
   <section class="section">
     <div class="form-card">
-      <h2>Login to GymPilot</h2>
-      <p>Enter your details to access your GymPilot command centre.</p>
+      <h2>Sign In</h2>
 
       <form id="login-form">
         <div class="form-group">
@@ -41,49 +43,36 @@
         </div>
 
         <button class="btn btn-primary" style="width:100%; margin-top:1rem;">
-          Login
+          Sign In
         </button>
       </form>
 
       <div class="form-footer">
-        <span><a href="#">Forgot password</a></span>
-        <span>New user? <a href="#">Request access</a></span>
+        <span>New here? <a href="signup.html">Sign Up</a></span>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
-  © <span id="year"></span> GymPilot. All rights reserved.
-</footer>
-
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  const supabaseClient = supabase.createClient(
-    "https://YOUR-PROJECT-ID.supabase.co",
-    "YOUR-ANON-PUBLIC-KEY"
-  );
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
 
-  document.getElementById("login-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const email = document.getElementById("email").value.trim();
-    const password = document.getElementById("password").value.trim();
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      alert("Login failed: " + error.message);
-      return;
-    }
-
-    // SUCCESS → redirect to Clixio white‑label app
-    window.location.href = "https://app.gympilot.software";
+  const { error } = await supabaseClient.auth.signInWithPassword({
+    email,
+    password
   });
+
+  if (error) {
+    alert("Login failed: " + error.message);
+    return;
+  }
+
+  window.location.href = "https://app.gympilot.software";
+});
 </script>
 
 </body>
