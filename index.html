@@ -2,204 +2,117 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>FitStudio CRM – Booking & Automation for Gyms</title>
+  <title>GymPilot – High-Performance CRM for Fitness Studios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
-    :root {
-      --primary: #1f8cff;
-      --dark: #0b1020;
-      --light: #f5f7fb;
-      --accent: #12c48b;
-      --text: #1b2234;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-    body { background: var(--light); color: var(--text); line-height: 1.6; }
-    header { background: white; border-bottom: 1px solid #e2e6f0; position: sticky; top: 0; z-index: 10; }
-    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
-    .nav { display: flex; align-items: center; justify-content: space-between; padding: 1rem 0; }
-    .logo { font-weight: 800; font-size: 1.3rem; color: var(--dark); }
-    .logo span { color: var(--primary); }
-    .nav-links a { margin-left: 1.5rem; text-decoration: none; color: var(--text); font-size: 0.95rem; }
-    .nav-links a.btn { padding: 0.5rem 1rem; border-radius: 999px; background: var(--primary); color: white; font-weight: 600; }
-    .hero { padding: 4rem 0 3rem; display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 3rem; align-items: center; }
-    .badge { display: inline-flex; align-items: center; padding: 0.25rem 0.75rem; border-radius: 999px; background: #e7f1ff; color: var(--primary); font-size: 0.8rem; margin-bottom: 1rem; }
-    h1 { font-size: 2.6rem; margin-bottom: 1rem; color: var(--dark); }
-    .hero p { font-size: 1rem; margin-bottom: 1.5rem; max-width: 480px; }
-    .hero-buttons { display: flex; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap; }
-    .btn-primary { background: var(--primary); color: white; padding: 0.8rem 1.6rem; border-radius: 999px; border: none; font-weight: 600; text-decoration: none; display: inline-block; }
-    .btn-secondary { background: white; color: var(--primary); padding: 0.8rem 1.6rem; border-radius: 999px; border: 1px solid #d0dcf0; font-weight: 600; text-decoration: none; display: inline-block; }
-    .hero-meta { font-size: 0.85rem; color: #6b7280; }
-    .hero-card { background: white; border-radius: 1.25rem; padding: 1.5rem; box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12); }
-    .hero-card h3 { font-size: 1.1rem; margin-bottom: 0.75rem; }
-    .hero-card ul { list-style: none; font-size: 0.9rem; }
-    .hero-card li { margin-bottom: 0.4rem; display: flex; align-items: center; }
-    .hero-card li span { width: 18px; height: 18px; border-radius: 999px; background: #e8f9f1; color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 0.4rem; }
-    section { padding: 3rem 0; }
-    h2 { font-size: 1.8rem; margin-bottom: 0.75rem; color: var(--dark); }
-    .section-sub { font-size: 0.95rem; color: #6b7280; margin-bottom: 2rem; max-width: 520px; }
-    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.5rem; }
-    .feature-card { background: white; border-radius: 1rem; padding: 1.25rem; border: 1px solid #e2e6f0; }
-    .feature-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
-    .feature-tag { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary); margin-bottom: 0.25rem; }
-    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
-    .price-card { background: white; border-radius: 1rem; padding: 1.5rem; border: 1px solid #e2e6f0; display: flex; flex-direction: column; justify-content: space-between; }
-    .price-card.highlight { border-color: var(--primary); box-shadow: 0 18px 45px rgba(37, 99, 235, 0.18); }
-    .price-header h3 { font-size: 1.1rem; margin-bottom: 0.25rem; }
-    .price { font-size: 1.8rem; font-weight: 700; margin: 0.5rem 0; }
-    .price span { font-size: 0.9rem; font-weight: 400; color: #6b7280; }
-    .price-features { list-style: none; font-size: 0.9rem; margin: 1rem 0 1.5rem; }
-    .price-features li { margin-bottom: 0.4rem; display: flex; align-items: center; }
-    .price-features li span { width: 16px; height: 16px; border-radius: 999px; background: #e8f9f1; color: var(--accent); display: inline-flex; align-items: center; justify-content: center; font-size: 0.75rem; margin-right: 0.4rem; }
-    footer { padding: 2rem 0; font-size: 0.85rem; color: #6b7280; }
-    @media (max-width: 800px) {
-      .hero { grid-template-columns: 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="container nav">
-      <div class="logo">FitStudio<span>CRM</span></div>
-      <nav class="nav-links">
-        <a href="#features">Features</a>
-        <a href="#pricing">Pricing</a>
-        <a href="https://app.fitstudiocrm.com" class="btn">Login</a>
-      </nav>
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-mark">GP</div>
+      <div class="logo-text">GymPilot</div>
     </div>
-  </header>
+    <nav class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-outline">Login</a>
+      <a href="login.html" class="btn btn-primary">Start Free</a>
+    </div>
+  </div>
+</header>
 
-  <main>
-    <section class="hero">
+<main>
+  <section class="hero">
+    <div>
+      <div class="hero-kicker">Built for high-performance studios</div>
+      <h1>Run your studio like a high‑performance machine.</h1>
+      <p>GymPilot gives you the power, automation, and control to turn leads into loyal members and scale without chaos.</p>
+      <div class="hero-cta">
+        <a href="login.html" class="btn btn-primary">Start Free</a>
+        <a href="pricing.html" class="btn btn-outline">View Pricing</a>
+      </div>
+      <div class="hero-meta">
+        <span>⚡ Average response time cut by 60%</span>
+        <span>📈 More trials, more memberships, less admin</span>
+      </div>
+    </div>
+    <aside class="hero-card">
+      <div class="hero-card-header">
+        <span>Today’s pipeline</span>
+        <span>GymPilot Command</span>
+      </div>
+      <div class="hero-pills">
+        <span class="pill">New Leads: 32</span>
+        <span class="pill">Trials: 11</span>
+        <span class="pill">Follow‑ups due: 19</span>
+        <span class="pill">Churn risk: 4</span>
+      </div>
+      <div class="hero-metric">
+        <strong>+27% more memberships</strong> for studios that automate follow‑ups with GymPilot.
+      </div>
+    </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
       <div>
-        <div class="badge">Built for gyms & fitness studios</div>
-        <h1>Reduce no shows and convert more leads on autopilot.</h1>
-        <p>FitStudio CRM gives your gym an all in one booking, SMS reminder, and lead follow up system—without hiring extra staff.</p>
-        <div class="hero-buttons">
-          <!-- Replace # with your Stripe checkout link for free trial or paid plan -->
-          <a href="#" class="btn-primary">Start Free Trial</a>
-          <a href="#pricing" class="btn-secondary">View Pricing</a>
-        </div>
-        <div class="hero-meta">No contracts. Cancel anytime. Perfect for independent gyms and fitness studios.</div>
+        <div class="section-kicker">Why GymPilot</div>
+        <h2 class="section-title">Aggressive growth. Controlled operations.</h2>
       </div>
-      <div class="hero-card">
-        <h3>What FitStudio CRM automates for you</h3>
-        <ul>
-          <li><span>✓</span> New lead follow up via SMS & email</li>
-          <li><span>✓</span> Class & consultation booking</li>
-          <li><span>✓</span> SMS reminders to reduce no shows</li>
-          <li><span>✓</span> Google review requests after visits</li>
-          <li><span>✓</span> Missed call text back so you never lose a lead</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="features">
-      <div class="container">
-        <h2>Everything your gym needs to run on autopilot.</h2>
-        <p class="section-sub">FitStudio CRM replaces scattered spreadsheets, missed calls, and manual follow up with one simple system built for gyms and fitness studios.</p>
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-tag">Leads</div>
-            <h3>Lead CRM</h3>
-            <p>Capture and track every lead from ads, your website, walk ins, and referrals in one place.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-tag">Automation</div>
-            <h3>Instant follow up</h3>
-            <p>Automatically send SMS and email sequences when someone requests a free trial or membership info.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-tag">Booking</div>
-            <h3>Online booking</h3>
-            <p>Let prospects and members book classes, PT sessions, and consultations without calling the front desk.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-tag">Attendance</div>
-            <h3>SMS reminders</h3>
-            <p>Reduce no shows with automated reminders before classes, trials, and consultations.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-tag">Reputation</div>
-            <h3>Review automation</h3>
-            <p>Automatically request Google reviews after visits to boost your local ranking and social proof.</p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-tag">Calls</div>
-            <h3>Missed call text back</h3>
-            <p>When you miss a call, FitStudio CRM texts the caller instantly so you never lose a hot lead.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="pricing">
-      <div class="container">
-        <h2>Simple pricing for growing gyms.</h2>
-        <p class="section-sub">Choose a plan that fits your studio. All plans include onboarding support and access to your FitStudio CRM dashboard.</p>
-        <div class="pricing-grid">
-          <div class="price-card">
-            <div class="price-header">
-              <h3>Starter</h3>
-              <p>Perfect for small gyms and studios.</p>
-              <div class="price">£99<span>/month</span></div>
-            </div>
-            <ul class="price-features">
-              <li><span>✓</span> Lead CRM</li>
-              <li><span>✓</span> Online booking</li>
-              <li><span>✓</span> Basic SMS reminders</li>
-              <li><span>✓</span> Email support</li>
-            </ul>
-            <!-- Replace # with Stripe checkout link for Starter -->
-            <a href="#" class="btn-primary">Get Starter</a>
-          </div>
-
-          <div class="price-card highlight">
-            <div class="price-header">
-              <h3>Growth</h3>
-              <p>Best for busy gyms and multi trainer studios.</p>
-              <div class="price">£149<span>/month</span></div>
-            </div>
-            <ul class="price-features">
-              <li><span>✓</span> Everything in Starter</li>
-              <li><span>✓</span> Automated lead follow up</li>
-              <li><span>✓</span> Review automation</li>
-              <li><span>✓</span> Missed call text back</li>
-            </ul>
-            <!-- Replace # with Stripe checkout link for Growth -->
-            <a href="#" class="btn-primary">Get Growth</a>
-          </div>
-
-          <div class="price-card">
-            <div class="price-header">
-              <h3>Pro</h3>
-              <p>For high volume gyms and franchises.</p>
-              <div class="price">£199<span>/month</span></div>
-            </div>
-            <ul class="price-features">
-              <li><span>✓</span> Everything in Growth</li>
-              <li><span>✓</span> Advanced automations</li>
-              <li><span>✓</span> Funnels & landing pages</li>
-              <li><span>✓</span> Priority support</li>
-            </ul>
-            <!-- Replace # with Stripe checkout link for Pro -->
-            <a href="#" class="btn-primary">Get Pro</a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="container">
-      <div>© <span id="year"></span> FitStudio CRM. All rights reserved.</div>
-      <div>Made for gyms & fitness studios.</div>
+      <p class="section-subtitle">
+        GymPilot is the command centre for owners who want to dominate their market, not just “manage” it.
+      </p>
     </div>
-  </footer>
+    <div class="grid-3">
+      <div class="card">
+        <div class="badge"><span class="badge-dot"></span><span>Lead engine</span></div>
+        <h3>Capture and convert every lead.</h3>
+        <p>Centralise leads from forms, ads, and walk‑ins. Never lose a prospect again.</p>
+      </div>
+      <div class="card">
+        <div class="badge"><span class="badge-dot"></span><span>Automation</span></div>
+        <h3>Follow‑ups on autopilot.</h3>
+        <p>Automated SMS and email sequences that hit hard and on time, every time.</p>
+      </div>
+      <div class="card">
+        <div class="badge"><span class="badge-dot"></span><span>Control</span></div>
+        <h3>See the whole machine.</h3>
+        <p>Visual pipelines and dashboards that show exactly where revenue is won or lost.</p>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Studios that scale</div>
+        <h2 class="section-title">Built for owners who move fast.</h2>
+      </div>
+      <p class="section-subtitle">
+        Whether you run a single studio or a multi‑location operation, GymPilot keeps your team aligned and accountable.
+      </p>
+    </div>
+    <div class="card">
+      <p style="font-size:0.9rem; color:var(--muted); margin:0;">
+        “We stopped guessing. GymPilot shows us exactly what to do every day to grow.”
+      </p>
+      <p style="font-size:0.8rem; margin-top:0.5rem; color:var(--muted);">
+        — Example Studio Owner
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> GymPilot. All rights reserved.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
-
-
