@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GymPilot Pricing – Choose Your Flight Path</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-mark">GP</div>
+      <div class="logo-text">GymPilot</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html" class="active">Pricing</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-outline">Login</a>
+      <a href="login.html" class="btn btn-primary">Start Free</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Pricing</div>
+        <h1 class="section-title">Choose your flight path.</h1>
+      </div>
+      <p class="section-subtitle">
+        Simple, transparent plans for studios that are serious about growth. No contracts. Upgrade as you scale.
+      </p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <div class="price-name">Starter</div>
+        <div class="price-value">£49<span>/month</span></div>
+        <p class="price-desc">For lean studios getting serious about systems.</p>
+        <ul class="price-features">
+          <li>Up to 1 location</li>
+          <li>Core CRM & pipelines</li>
+          <li>Basic automations</li>
+          <li>Email & SMS messaging</li>
+        </ul>
+        <a href="login.html" class="btn btn-outline" style="margin-top:0.75rem;">Start Starter</a>
+      </div>
+
+      <div class="price-card highlight">
+        <div class="price-name">Pro</div>
+        <div class="price-value">£99<span>/month</span></div>
+        <p class="price-desc">For studios that want aggressive, predictable growth.</p>
+        <ul class="price-features">
+          <li>Up to 3 locations</li>
+          <li>Advanced automations</li>
+          <li>Priority support</li>
+          <li>Reporting & dashboards</li>
+        </ul>
+        <a href="login.html" class="btn btn-primary" style="margin-top:0.75rem;">Start Pro</a>
+      </div>
+
+      <div class="price-card">
+        <div class="price-name">Elite</div>
+        <div class="price-value">£199<span>/month</span></div>
+        <p class="price-desc">For multi‑location operators who want full control.</p>
+        <ul class="price-features">
+          <li>Unlimited locations</li>
+          <li>Custom onboarding</li>
+          <li>Dedicated success manager</li>
+          <li>Advanced reporting</li>
+        </ul>
+        <a href="login.html" class="btn btn-outline" style="margin-top:0.75rem;">Talk to sales</a>
+      </div>
+    </div>
+
+    <div class="section" style="margin-top:3rem;">
+      <div class="card">
+        <h3 style="margin-top:0;">FAQ</h3>
+        <p style="font-size:0.85rem; color:var(--muted);">
+          <strong>Is there a contract?</strong> No. GymPilot is month‑to‑month.  
+          <br /><br />
+          <strong>Can I change plans?</strong> Yes, you can upgrade or downgrade at any time.  
+          <br /><br />
+          <strong>Do you offer onboarding?</strong> Pro and Elite plans include guided setup.
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> GymPilot. All rights reserved.
+</footer>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
