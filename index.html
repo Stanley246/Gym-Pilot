@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
 
-  <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     const supabaseClient = supabase.createClient(
@@ -15,25 +14,19 @@
     );
   </script>
 </head>
-
 <body>
-
 <header>
   <div class="nav">
     <div class="nav-left">
       <div class="logo-mark">GP</div>
       <div class="logo-text">GymPilot</div>
     </div>
-
     <nav class="nav-links">
       <a href="index.html" class="active">Home</a>
       <a href="features.html">Features</a>
       <a href="pricing.html">Pricing</a>
     </nav>
-
-    <div class="nav-cta" id="auth-buttons">
-      <!-- Filled by JS -->
-    </div>
+    <div class="nav-cta" id="auth-buttons"></div>
   </div>
 </header>
 
@@ -42,14 +35,16 @@
     <div>
       <div class="hero-kicker">Built for high-performance studios</div>
       <h1>Run your studio like a high‑performance machine.</h1>
-      <p>GymPilot gives you the power, automation, and control to scale without chaos.</p>
-
+      <p>GymPilot gives you the power, automation, and control to turn leads into loyal members and scale without chaos.</p>
       <div class="hero-cta">
         <a href="signup.html" class="btn btn-primary">Start Free</a>
         <a href="pricing.html" class="btn btn-outline">View Pricing</a>
       </div>
+      <div class="hero-meta">
+        <span>⚡ Average response time cut by 60%</span>
+        <span>📈 More trials, more memberships, less admin</span>
+      </div>
     </div>
-
     <aside class="hero-card">
       <div class="hero-card-header">
         <span>Today’s pipeline</span>
@@ -61,7 +56,59 @@
         <span class="pill">Follow‑ups due: 19</span>
         <span class="pill">Churn risk: 4</span>
       </div>
+      <div class="hero-metric">
+        <strong>+27% more memberships</strong> for studios that automate follow‑ups with GymPilot.
+      </div>
     </aside>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Why GymPilot</div>
+        <h2 class="section-title">Aggressive growth. Controlled operations.</h2>
+      </div>
+      <p class="section-subtitle">
+        GymPilot is the command centre for owners who want to dominate their market, not just “manage” it.
+      </p>
+    </div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="badge"><span class="badge-dot"></span><span>Lead engine</span></div>
+        <h3>Capture and convert every lead.</h3>
+        <p>Centralise leads from forms, ads, and walk‑ins. Never lose a prospect again.</p>
+      </div>
+      <div class="card">
+        <div class="badge"><span class="badge-dot"></span><span>Automation</span></div>
+        <h3>Follow‑ups on autopilot.</h3>
+        <p>Automated SMS and email sequences that hit hard and on time, every time.</p>
+      </div>
+      <div class="card">
+        <div class="badge"><span class="badge-dot"></span><span>Control</span></div>
+        <h3>See the whole machine.</h3>
+        <p>Visual pipelines and dashboards that show exactly where revenue is won or lost.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Studios that scale</div>
+        <h2 class="section-title">Built for owners who move fast.</h2>
+      </div>
+      <p class="section-subtitle">
+        Whether you run a single studio or a multi‑location operation, GymPilot keeps your team aligned and accountable.
+      </p>
+    </div>
+    <div class="card">
+      <p style="font-size:0.9rem; color:var(--muted); margin:0;">
+        “We stopped guessing. GymPilot shows us exactly what to do every day to grow.”
+      </p>
+      <p style="font-size:0.8rem; margin-top:0.5rem; color:var(--muted);">
+        — Example Studio Owner
+      </p>
+    </div>
   </section>
 </main>
 
@@ -78,17 +125,16 @@
 
     if (session) {
       box.innerHTML = `
+        <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
         <span style="color:#b3b3b3; font-size:0.8rem;">
-          Signed in as ${session.user.email}
+          ${session.user.email}
         </span>
         <button class="btn btn-outline" id="signout-btn">Sign Out</button>
       `;
-
       document.getElementById("signout-btn").onclick = async () => {
         await supabaseClient.auth.signOut();
         refreshAuthUI();
       };
-
     } else {
       box.innerHTML = `
         <a href="login.html" class="btn btn-outline">Sign In</a>
@@ -99,6 +145,5 @@
 
   refreshAuthUI();
 </script>
-
 </body>
 </html>
