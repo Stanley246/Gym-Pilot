@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>GymPilot Login – Access Your Command Centre</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="nav-left">
+      <div class="logo-mark">GP</div>
+      <div class="logo-text">GymPilot</div>
+    </div>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="features.html">Features</a>
+      <a href="pricing.html">Pricing</a>
+    </nav>
+    <div class="nav-cta">
+      <a href="login.html" class="btn btn-primary">Login</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="section">
+    <div class="form-card">
+      <h2>Login to GymPilot</h2>
+      <p>Enter your details to access your GymPilot command centre.</p>
+
+      <form id="login-form">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" type="email" required placeholder="you@studio.com" />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input id="password" type="password" required placeholder="••••••••" />
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%; margin-top:0.5rem;">
+          Login
+        </button>
+      </form>
+
+      <div class="form-footer">
+        <span><a href="#">Forgot password?</a></span>
+        <span>New here? <a href="#">Request access</a></span>
+      </div>
+
+      <div style="margin-top:1.25rem; font-size:0.75rem; color:var(--muted);">
+        Studio owner? Use your dedicated GymPilot app link:
+        <br />
+        <a href="https://app.your-clixio-domain.com" target="_blank" rel="noreferrer">
+          Open GymPilot dashboard
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  © <span id="year"></span> GymPilot. All rights reserved.
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // TODO: Replace this with Supabase auth logic
+  document.getElementById('login-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    alert('Supabase login will be wired here.');
+  });
+</script>
+</body>
+</html>
