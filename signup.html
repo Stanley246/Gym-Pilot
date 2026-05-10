@@ -17,15 +17,6 @@
 
 <body>
 
-<header>
-  <div class="nav">
-    <div class="nav-left">
-      <div class="logo-mark">GP</div>
-      <div class="logo-text">GymPilot</div>
-    </div>
-  </div>
-</header>
-
 <main>
   <section class="section">
     <div class="form-card">
@@ -52,9 +43,7 @@
         </button>
       </form>
 
-      <div class="form-footer">
-        <span>Already have an account? <a href="login.html">Sign In</a></span>
-      </div>
+      <p id="message" style="margin-top:1rem; color:var(--muted);"></p>
     </div>
   </section>
 </main>
@@ -71,16 +60,19 @@ document.getElementById("signup-form").addEventListener("submit", async (e) => {
     email,
     password,
     options: {
+      emailRedirectTo: "https://app.gympilot.software",
       data: { full_name }
     }
   });
 
   if (error) {
-    alert("Signup failed: " + error.message);
+    document.getElementById("message").textContent =
+      "Signup failed: " + error.message;
     return;
   }
 
-  window.location.href = "https://app.gympilot.software";
+  document.getElementById("message").textContent =
+    "Check your email to verify your account before signing in.";
 });
 </script>
 
