@@ -2,17 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>GymPilot – Features</title>
+  <title>GymPilot Features – Command Centre for Fitness Studios</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="styles.css" />
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script>
-    const supabaseClient = supabase.createClient(
-      "https://YOUR-PROJECT-ID.supabase.co",
-      "YOUR-ANON-PUBLIC-KEY"
-    );
-  </script>
 </head>
 <body>
 <header>
@@ -21,12 +14,25 @@
       <div class="logo-mark">GP</div>
       <div class="logo-text">GymPilot</div>
     </div>
+
     <nav class="nav-links">
       <a href="index.html">Home</a>
       <a href="features.html" class="active">Features</a>
       <a href="pricing.html">Pricing</a>
+      <!-- Dashboard (only visible when logged in) -->
+      <a href="dashboard.html" id="dashboard-link" style="display:none;">Dashboard</a>
     </nav>
-    <div class="nav-cta" id="auth-buttons"></div>
+
+    <!-- Logged-out buttons -->
+    <div class="nav-cta" id="auth-buttons">
+      <a href="login.html" class="btn btn-outline" id="login-btn">Login</a>
+      <a href="login.html" class="btn btn-primary" id="signup-btn">Start Free</a>
+    </div>
+
+    <!-- Logged-in logout button -->
+    <div class="nav-cta" id="logout-container" style="display:none;">
+      <button class="btn btn-outline" id="logout-btn">Logout</button>
+    </div>
   </div>
 </header>
 
@@ -77,6 +83,23 @@
         <p>See trials, conversions, churn risk, and campaign performance at a glance.</p>
       </div>
     </div>
+
+    <div class="section" style="margin-top:3rem;">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Multi‑location ready</div>
+          <h2 class="section-title">Scale without losing control.</h2>
+        </div>
+        <p class="section-subtitle">
+          GymPilot is built for owners who run more than one location and need consistent processes across every team.
+        </p>
+      </div>
+      <div class="card">
+        <p style="font-size:0.9rem; color:var(--muted); margin:0;">
+          Standardise pipelines, automations, and messaging templates across locations while keeping performance data separate and clear.
+        </p>
+      </div>
+    </div>
   </section>
 </main>
 
@@ -85,33 +108,39 @@
 </footer>
 
 <script>
-  document.getElementById("year").textContent = new Date().getFullYear();
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-  async function refreshAuthUI() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    const box = document.getElementById("auth-buttons");
+  // Supabase client
+  const supabase = supabase.createClient(
+    "YOUR_SUPABASE_URL",
+    "YOUR_SUPABASE_ANON_KEY"
+  );
+
+  async function updateNav() {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    const loginBtns = document.getElementById("auth-buttons");
+    const logoutContainer = document.getElementById("logout-container");
+    const dashboardLink = document.getElementById("dashboard-link");
 
     if (session) {
-      box.innerHTML = `
-        <a href="dashboard.html" class="btn btn-outline">Dashboard</a>
-        <span style="color:#b3b3b3; font-size:0.8rem;">
-          ${session.user.email}
-        </span>
-        <button class="btn btn-outline" id="signout-btn">Sign Out</button>
-      `;
-      document.getElementById("signout-btn").onclick = async () => {
-        await supabaseClient.auth.signOut();
-        refreshAuthUI();
-      };
+      loginBtns.style.display = "none";
+      logoutContainer.style.display = "flex";
+      dashboardLink.style.display = "inline-block";
     } else {
-      box.innerHTML = `
-        <a href="login.html" class="btn btn-outline">Sign In</a>
-        <a href="signup.html" class="btn btn-primary">Sign Up</a>
-      `;
+      loginBtns.style.display = "flex";
+      logoutContainer.style.display = "none";
+      dashboardLink.style.display = "none";
     }
   }
 
-  refreshAuthUI();
+  updateNav();
+
+  document.getElementById("logout-btn").addEventListener("click", async () => {
+    await supabase.auth.signOut();
+    location.reload();
+  });
 </script>
+
 </body>
 </html>
