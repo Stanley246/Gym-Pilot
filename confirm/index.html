@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirming Your Account | GymPilot</title>
+
+  <!-- Load your existing site stylesheet -->
+  <link rel="stylesheet" href="../style.css" />
+
+  <!-- Supabase client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+
+  <!-- Header (same as your site) -->
+  <header>
+    <nav class="nav">
+      <div class="nav-left">
+        <div class="logo-mark">GP</div>
+        <div class="logo-text">GymPilot</div>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <div class="form-card" id="verifyCard">
+      <h2 id="title">Verifying Your Account…</h2>
+      <p id="status">Please wait while we confirm your email.</p>
+
+      <a id="dashboardBtn" class="btn btn-primary" href="../dashboard/index.html" style="display:none;">
+        Take Me to Dashboard
+      </a>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 GymPilot. All rights reserved.
+  </footer>
+
+  <script>
+    const supabase = supabase.createClient(
+      "https://YOUR-PROJECT-ID.supabase.co",
+      "YOUR-PUBLIC-ANON-KEY"
+    );
+
+    async function verify() {
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token");
+      const type = params.get("type");
+
+      if (!token || !type) {
+        document.getElementById("title").innerText = "Invalid Link";
+        document.getElementById("status").innerText =
+          "This confirmation link is missing required information.";
+        return;
+      }
+
+      const { error } = await supabase.auth.verifyOtp({ token, type });
+
+      if (error) {
+        document.getElementById("title").innerText = "Verification Failed";
+        document.getElementById("status").innerText =
+          "Your link may have expired or already been used.";
+      } else {
+        document.getElementById("title").innerText = "Account Verified!";
+        document.getElementById("status").innerText =
+          "Your account is now active. Welcome to GymPilot.";
+
+        document.getElementById("dashboardBtn").style.display = "inline-block";
+      }
+    }
+
+    verify();
+  </script>
+
+</body>
+</html>
