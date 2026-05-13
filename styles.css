@@ -418,4 +418,25 @@ footer {
   .nav-links {
     display: none;
   }
+}/* Make the page fill the full height so footer sits at the bottom */
+html, body {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
+
+/* Push footer to the bottom */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  align-items: center;       /* center vertically */
+  flex-direction: column;
+  padding: 2rem 1.5rem;
+}
+
+/* Center all form-card blocks */
+.form-card {
+  margin: 0 auto;            /* center horizontally */
+}
+
