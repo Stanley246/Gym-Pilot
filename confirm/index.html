@@ -40,41 +40,50 @@
     © 2026 GymPilot. All rights reserved.
   </footer>
 
-  <script>
-    const supabase = supabase.createClient(
-      "https://aalmgeqabbpsbclfksib.supabase.co",
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhbG1nZXFhYmJwc2JjbGZrc2liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0MjY4NTUsImV4cCI6MjA5NDAwMjg1NX0.8tcJ5Uj5CY-PsSCBO8MwdtKLzyqzRzyr6V9-6LYVdBY"
-    );
+ <script>
+  const supabase = supabase.createClient(
+    "https://aalmgeqabbpsbclfksib.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhbG1nZXFhYmJwc2JjbGZrc2liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg0MjY4NTUsImV4cCI6MjA5NDAwMjg1NX0.8tcJ5Uj5CY-PsSCBO8MwdtKLzyqzRzyr6V9-6LYVdBY"
+  );
 
-    async function verify() {
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("token");
-      const type = params.get("type");
+  async function verify() {
+    const params = new URLSearchParams(window.location.search);
 
-      if (!token || !type) {
-        document.getElementById("title").innerText = "Invalid Link";
-        document.getElementById("status").innerText =
-          "This confirmation link is missing required information.";
-        return;
-      }
+    // Supabase Auth v3 uses "code" instead of "token"
+    const token = params.get("token") || params.get("code");
+    const type = params.get("type") || "signup"; // fallback for safety
 
-      const { error } = await supabase.auth.verifyOtp({ token, type });
-
-      if (error) {
-        document.getElementById("title").innerText = "Verification Failed";
-        document.getElementById("status").innerText =
-          "Your link may have expired or already been used.";
-      } else {
-        document.getElementById("title").innerText = "Account Verified!";
-        document.getElementById("status").innerText =
-          "Your account is now active. Welcome to GymPilot.";
-
-        document.getElementById("dashboardBtn").style.display = "inline-block";
-      }
+    if (!token || !type) {
+      document.getElementById("title").innerText = "Invalid Link";
+      document.getElementById("status").innerText =
+        "This confirmation link is missing required information.";
+      return;
     }
 
-    verify();
-  </script>
+    // Auth v3 requires "email" for signup verification
+    const email = params.get("email");
+
+    const { error } = await supabase.auth.verifyOtp({
+      token,
+      type,
+      email
+    });
+
+    if (error) {
+      document.getElementById("title").innerText = "Verification Failed";
+      document.getElementById("status").innerText =
+        "Your link may have expired or already been used.";
+    } else {
+      document.getElementById("title").innerText = "Account Verified!";
+      document.getElementById("status").innerText =
+        "Your account is now active. Welcome to GymPilot.";
+
+      document.getElementById("dashboardBtn").style.display = "inline-block";
+    }
+  }
+
+  verify();
+</script>
 
 </body>
 </html>
